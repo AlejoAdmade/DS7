@@ -3,33 +3,25 @@ body {
     background: linear-gradient(to right, #141e30, #243b55);
     color: white;
     text-align: center;
-    margin: 0;
-}
-
-.container {
-    margin-top: 40px;
 }
 
 .cards {
     display: flex;
     justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .card {
     background: #1f2a40;
     padding: 20px;
-    border-radius: 12px;
+    border-radius: 10px;
     width: 250px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.5);
 }
 
 .barra {
     background: #555;
     border-radius: 10px;
     overflow: hidden;
-    margin: 10px 0;
 }
 
 .vida {
@@ -39,24 +31,18 @@ body {
 
 button {
     background: #e74c3c;
+    padding: 10px;
     border: none;
-    padding: 10px 15px;
-    margin: 5px;
     color: white;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #ff6b6b;
+    margin: 5px;
+    border-radius: 5px;
 }
 
 .log {
+    background: black;
     margin: 20px auto;
     width: 60%;
-    background: #111;
-    padding: 15px;
-    border-radius: 10px;
+    padding: 10px;
     height: 200px;
     overflow-y: auto;
 }

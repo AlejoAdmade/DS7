@@ -14,6 +14,10 @@ class Personaje {
         $this->mana = $mana;
     }
 
+    public function getVida(): int {
+        return $this->vida;
+    }
+
     public function aprenderHabilidad(Habilidad $habilidad) {
         $this->habilidades[$habilidad->getNombre()] = $habilidad;
         echo "{$this->nombre} aprendió: {$habilidad->getNombre()}<br>";

@@ -1,17 +1,23 @@
 <?php
-session_start();
 
+// 🔥 IMPORTS ANTES DE SESSION (FIX)
 require_once "clases/Personaje.php";
+require_once "clases/Habilidad.php";
 require_once "clases/DmgFijo.php";
 require_once "clases/DmgAleatorio.php";
+require_once "clases/DmgInterface.php";
+require_once "clases/Excepciones.php";
+
+session_start();
 
 // RESET
 if (isset($_POST['reset'])) {
     session_destroy();
     header("Location: index.php");
+    exit;
 }
 
-// Inicializar juego
+// INICIALIZAR
 if (!isset($_SESSION['init'])) {
 
     $gandalf = new Personaje("Gandalf", 100, 100);
@@ -29,7 +35,7 @@ if (!isset($_SESSION['init'])) {
     $_SESSION['init'] = true;
 }
 
-// Acción combate
+// ACCIONES
 if (isset($_POST['accion'])) {
     try {
         $g = $_SESSION['gandalf'];
@@ -56,73 +62,60 @@ if (isset($_POST['accion'])) {
     }
 }
 
-// Obtener vida (hack simple para barra)
-function getVida($personaje) {
-    $ref = new ReflectionClass($personaje);
-    $prop = $ref->getProperty("vida");
-    $prop->setAccessible(true);
-    return $prop->getValue($personaje);
-}
+// VIDA (FIX sin reflection)
+$vidaG = $_SESSION['gandalf']->getVida();
+$vidaO = $_SESSION['orco']->getVida();
 
-$vidaG = getVida($_SESSION['gandalf']);
-$vidaO = getVida($_SESSION['orco']);
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>RPG Combate</title>
+    <title>RPG</title>
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
 
-<div class="container">
-    <h1>⚔️ Sistema de Combate RPG</h1>
+<h1>⚔️ Combate RPG</h1>
 
-    <div class="cards">
+<div class="cards">
 
-        <!-- Gandalf -->
-        <div class="card">
-            <h2>🧙 Gandalf</h2>
-            <div class="barra">
-                <div class="vida" style="width: <?= $vidaG ?>%"></div>
-            </div>
-            <p>Vida: <?= $vidaG ?></p>
-
-            <form method="POST">
-                <button name="accion" value="fuego">🔥 Bola de Fuego</button>
-                <button name="accion" value="critico">⚡ Rayo Crítico</button>
-            </form>
+    <div class="card">
+        <h2>🧙 Gandalf</h2>
+        <div class="barra">
+            <div class="vida" style="width: <?= $vidaG ?>%"></div>
         </div>
+        <p>Vida: <?= $vidaG ?></p>
 
-        <!-- Orco -->
-        <div class="card">
-            <h2>👹 Orco</h2>
-            <div class="barra">
-                <div class="vida" style="width: <?= $vidaO ?>%"></div>
-            </div>
-            <p>Vida: <?= $vidaO ?></p>
-        </div>
-
+        <form method="POST">
+            <button name="accion" value="fuego">🔥 Fuego</button>
+            <button name="accion" value="critico">⚡ Crítico</button>
+        </form>
     </div>
 
-    <!-- Log -->
-    <div class="log">
-        <h3>📜 Combate</h3>
-        <?php
-        foreach ($_SESSION['log'] as $linea) {
-            echo $linea . "<br>";
-        }
-        ?>
+    <div class="card">
+        <h2>👹 Orco</h2>
+        <div class="barra">
+            <div class="vida" style="width: <?= $vidaO ?>%"></div>
+        </div>
+        <p>Vida: <?= $vidaO ?></p>
     </div>
-
-    <!-- Reset -->
-    <form method="POST">
-        <button name="reset">🔄 Reiniciar</button>
-    </form>
 
 </div>
+
+<div class="log">
+    <h3>📜 Log</h3>
+    <?php
+    foreach ($_SESSION['log'] as $l) {
+        echo $l . "<br>";
+    }
+    ?>
+</div>
+
+<form method="POST">
+    <button name="reset">Reiniciar</button>
+</form>
 
 </body>
 </html>
