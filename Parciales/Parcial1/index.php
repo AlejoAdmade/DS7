@@ -36,7 +36,7 @@ if (!isset($_SESSION['init'])) {
 }
 
 // ACCIONES
-if (isset($_POST['accion'])) {
+if (isset($_POST['accion']) && $_SESSION['orco']->estaVivo()) {
     try {
         $g = $_SESSION['gandalf'];
         $o = $_SESSION['orco'];
@@ -55,7 +55,11 @@ if (isset($_POST['accion'])) {
         $_SESSION['log'][] = $output;
 
         $_SESSION['gandalf'] = $g;
-        $_SESSION['orco'] = $o;
+$_SESSION['orco'] = $o;
+
+// 🔥 FIX REFRESH
+header("Location: index.php");
+exit;
 
     } catch (Exception $e) {
         $_SESSION['log'][] = "Error: " . $e->getMessage();
@@ -89,8 +93,13 @@ $vidaO = $_SESSION['orco']->getVida();
         <p>Vida: <?= $vidaG ?></p>
 
         <form method="POST">
-            <button name="accion" value="fuego">🔥 Fuego</button>
-            <button name="accion" value="critico">⚡ Crítico</button>
+            <button name="accion" value="fuego" <?= !$vidaO ? 'disabled' : '' ?>>
+    🔥 Fuego
+</button>
+
+<button name="accion" value="critico" <?= !$vidaO ? 'disabled' : '' ?>>
+    ⚡ Crítico
+</button>
         </form>
     </div>
 

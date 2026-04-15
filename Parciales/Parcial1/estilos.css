@@ -46,3 +46,9 @@ button {
     height: 200px;
     overflow-y: auto;
 }
+
+button:disabled {
+    background: #777;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
