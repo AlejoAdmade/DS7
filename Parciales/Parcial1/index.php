@@ -1,6 +1,5 @@
 <?php
 
-// 🔥 IMPORTS ANTES DE SESSION (FIX)
 require_once "clases/Personaje.php";
 require_once "clases/Habilidad.php";
 require_once "clases/DmgFijo.php";
@@ -10,17 +9,15 @@ require_once "clases/Excepciones.php";
 
 session_start();
 
-// RESET
 if (isset($_POST['reset'])) {
     session_destroy();
     header("Location: index.php");
     exit;
 }
 
-// INICIALIZAR
 if (!isset($_SESSION['init'])) {
 
-    $gandalf = new Personaje("Gandalf", 100, 100);
+    $gandalf = new Personaje("Gandalf", 100, 75);
     $orco = new Personaje("Orco", 120, 50);
 
     $fuego = new Habilidad("Bola de Fuego", 20, new DmgFijo(50));
@@ -35,7 +32,6 @@ if (!isset($_SESSION['init'])) {
     $_SESSION['init'] = true;
 }
 
-// ACCIONES
 if (isset($_POST['accion']) && $_SESSION['orco']->estaVivo()) {
     try {
         $g = $_SESSION['gandalf'];
@@ -55,23 +51,19 @@ if (isset($_POST['accion']) && $_SESSION['orco']->estaVivo()) {
         $_SESSION['log'][] = $output;
 
         $_SESSION['gandalf'] = $g;
-$_SESSION['orco'] = $o;
+        $_SESSION['orco'] = $o;
 
-// 🔥 FIX REFRESH
-header("Location: index.php");
-exit;
+        header("Location: index.php");
+        exit;
 
     } catch (Exception $e) {
         $_SESSION['log'][] = "Error: " . $e->getMessage();
     }
 }
 
-// VIDA (FIX sin reflection)
 $vidaG = $_SESSION['gandalf']->getVida();
 $vidaO = $_SESSION['orco']->getVida();
-
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -93,13 +85,8 @@ $vidaO = $_SESSION['orco']->getVida();
         <p>Vida: <?= $vidaG ?></p>
 
         <form method="POST">
-            <button name="accion" value="fuego" <?= !$vidaO ? 'disabled' : '' ?>>
-    🔥 Fuego
-</button>
-
-<button name="accion" value="critico" <?= !$vidaO ? 'disabled' : '' ?>>
-    ⚡ Crítico
-</button>
+            <button name="accion" value="fuego" <?= !$vidaO ? 'disabled' : '' ?>>🔥 Fuego</button>
+            <button name="accion" value="critico" <?= !$vidaO ? 'disabled' : '' ?>>⚡ Crítico</button>
         </form>
     </div>
 
@@ -114,7 +101,7 @@ $vidaO = $_SESSION['orco']->getVida();
 </div>
 
 <div class="log">
-    <h3>📜 Log</h3>
+    <h3>Combate</h3>
     <?php
     foreach ($_SESSION['log'] as $l) {
         echo $l . "<br>";

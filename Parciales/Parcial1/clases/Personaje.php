@@ -36,15 +36,15 @@ class Personaje {
 
         $this->mana -= $habilidad->getCoste();
 
-        $danio = $habilidad->ejecutar();
-        $objetivo->recibirDanio($danio);
+        $dmg = $habilidad->ejecutar();
+        $objetivo->recibirDmg($dmg);
     }
 
-    public function recibirDanio(int $danio) {
-        $this->vida -= $danio;
+    public function recibirDmg(int $dmg) {
+        $this->vida -= $dmg;
         if ($this->vida < 0) $this->vida = 0;
 
-        echo "{$this->nombre} recibió {$danio} de daño. Vida restante: {$this->vida}<br>";
+        echo "{$this->nombre} recibió {$dmg} de daño. Vida restante: {$this->vida}<br>";
 
         if (!$this->estaVivo()) {
             echo "¡{$this->nombre} ha sido derrotado!<br>";

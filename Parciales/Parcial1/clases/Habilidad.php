@@ -4,12 +4,12 @@ require_once "DmgInterface.php";
 class Habilidad {
     private string $nombre;
     private int $coste;
-    private DmgInterface $tipoDanio;
+    private DmgInterface $tipoDmg;
 
-    public function __construct(string $nombre, int $coste, DmgInterface $tipoDanio) {
+    public function __construct(string $nombre, int $coste, DmgInterface $tipoDmg) {
         $this->nombre = $nombre;
         $this->coste = $coste;
-        $this->tipoDanio = $tipoDanio;
+        $this->tipoDmg = $tipoDmg;
     }
 
     public function getNombre(): string {
@@ -21,6 +21,6 @@ class Habilidad {
     }
 
     public function ejecutar(): int {
-        return $this->tipoDanio->calcularDanio();
+        return $this->tipoDmg->calcularDmg();
     }
 }

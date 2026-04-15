@@ -1,4 +1,4 @@
 <?php
 interface DmgInterface {
-    public function calcularDanio(): int;
+    public function calcularDmg(): int;
 }

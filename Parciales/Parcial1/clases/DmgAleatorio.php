@@ -10,7 +10,7 @@ class DmgAleatorio implements DmgInterface {
         $this->max = $max;
     }
 
-    public function calcularDanio(): int {
+    public function calcularDmg(): int {
         return rand($this->min, $this->max);
     }
 }

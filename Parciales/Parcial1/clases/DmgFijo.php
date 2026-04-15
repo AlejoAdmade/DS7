@@ -2,13 +2,13 @@
 require_once "DmgInterface.php";
 
 class DmgFijo implements DmgInterface {
-    private int $danio;
+    private int $dmg;
 
-    public function __construct(int $danio) {
-        $this->danio = $danio;
+    public function __construct(int $dmg) {
+        $this->dmg = $dmg;
     }
 
-    public function calcularDanio(): int {
-        return $this->danio;
+    public function calcularDmg(): int {
+        return $this->dmg;
     }
 }
