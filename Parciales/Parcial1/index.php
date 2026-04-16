@@ -17,7 +17,7 @@ if (isset($_POST['reset'])) {
 
 if (!isset($_SESSION['init'])) {
 
-    $gandalf = new Personaje("Gandalf", 100, 75);
+    $gandalf = new Personaje("Gandalf", 100, 100);
     $orco = new Personaje("Orco", 120, 50);
 
     $fuego = new Habilidad("Bola de Fuego", 20, new DmgFijo(50));
